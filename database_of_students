@@ -1,0 +1,118 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Student {
+private:
+    int rollNo;
+    string name;
+    string dob;
+    string bloodGroup;
+    string className;
+    char division;
+    string contactAddress;
+    string phoneNo;
+    string drivingLicenseNo;
+    static int studentCount;
+
+public:
+    Student() {
+    rollNo = 0 ;
+    name = "Unknown";
+    dob = "01/01/2000";
+    bloodGroup = "O+";
+    className = "Unknown";
+    division ='A';
+    contactAddress = "Unknown";
+    phoneNo = "0000000000";
+    drivingLicenseNo = "Not Available";
+    studentCount++;
+    } 
+    Student(int r, string n, string d, string bg, string c, char div, string addr, string phone,string diNo) {
+    rollNo = r ,
+    name = n ;
+    dob = d ;
+    bloodGroup = bg;
+    className = c;
+    division = div ;
+    contactAddress = addr;
+    phoneNo = phone;
+    drivingLicenseNo = diNo;
+    studentCount++;
+}
+
+~Student() {
+    studentCount--;
+    cout << "Destructor called for student" << name << endl;
+}
+static int getStudentCount() { 
+    return studentCount;
+}
+
+void input() {
+    cout << "Enter Roll No: "; 
+    cin >> rollNo;
+    cin.ignore();
+    
+    cout << "Enter Name: "; 
+    getline(cin, name);
+    
+    cout << "Enter Date of Birth (DD/MM/YYYY): "; 
+    getline(cin, dob);
+    
+    cout << "Enter Blood Group: "; 
+    getline(cin, bloodGroup);
+    
+    cout << "Enter Class: "; 
+    getline(cin, className);
+    
+    cout << "Enter Division: "; 
+    cin >> division;
+    cin.ignore();
+    
+    cout << "Enter Contact Address: ";
+    getline(cin, contactAddress);
+    
+    cout << "Enter Phone No: "; 
+    getline(cin, phoneNo);
+    
+    cout << "Enter Driving License No: ";
+    getline(cin, drivingLicenseNo);
+}
+
+void display() const {
+    cout << "Roll No: " << rollNo << endl;
+    cout << "Name: "<<name << endl;
+    cout << "Date of Birth: " << dob << endl;
+    cout << "Blood Group: " << bloodGroup << endl;
+    cout << "Class: " << className << endl;
+    cout << "Division: " << division << endl;
+    cout << "Contact Address: " << contactAddress << endl;
+    cout << "Phone No: " << phoneNo << endl;
+    cout << "Driving License No: " << drivingLicenseNo << endl; 
+    cout <<"----" << endl;
+}
+};
+
+int Student::studentCount = 0;
+
+int main() {
+    int n;
+    cout << "Enter the number of students: ";
+    cin >> n;
+    
+    Student* students = new Student[n];
+    for (int i = 0; i < n; ++i) {
+    cout << "\nEnter details for student" << i + 1 << ":\n";
+    students[i].input();
+    }
+    cout << "\nDisplaying details of all students:\n";
+    for (int i = 0; i < n; ++i) { 
+    students[i].display();
+    }
+    
+    cout << "Total students in database: " << Student::getStudentCount() << endl;
+    
+    delete students;
+    return 0;
+}

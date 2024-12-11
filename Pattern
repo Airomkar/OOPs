@@ -1,0 +1,175 @@
+#include<iostream>
+ #include<graphics.h>
+ #include<stdlib.h>
+ usingnamespacestd;
+ classdcircle
+ {
+ private: intx0,y0;
+ public:
+ dcircle()
+ {
+ x0=0;
+ y0=0;
+ }
+ voidsetoff(intxx, intyy)
+ {
+ x0=xx;
+ y0=yy;
+ }
+ voiddrawc(intx1, inty1, intr)
+ {
+ floatd;
+ intx,y;
+ x=0;
+ y=r;
+ d=3-2*r;
+ do
+ {
+ putpixel(x1+x0+x,y0+y-y1,15);
+ putpixel(x1+x0+y,y0+x-y1,15);
+ putpixel(x1+x0+y,y0-x-y1,15);
+ putpixel(x1+x0+x,y0-y-y1,15);
+ putpixel(x1+x0-x,y0-y-y1,15);
+ putpixel(x1+x0-y,y0-x-y1,15);
+ putpixel(x1+x0-y,y0+x-y1,15);
+ putpixel(x1+x0-x,y0+y-y1,15);
+ if(d<=0)
+ {
+ d=d+4*x+6;
+ }
+ else
+{
+ d=d+4*(x-y)+10;
+ y=y-1;
+ }
+ x=x+1;
+ }
+ while(x<y);
+ }
+ };
+ classpt
+ {
+ protected: intxco,yco,color;
+ public:
+ pt()
+ {
+ xco=0,yco=0,color=15;
+ }
+ voidsetco(intx, inty)
+ {
+ xco=x;
+ yco=y;
+ }
+ voidsetcolor(intc)
+ {
+ color=c;
+ }
+ voiddraw()
+ {
+ putpixel(xco,yco,color);
+ }
+ };
+ classdline:publicpt
+ {
+ private: intx2,y2;
+ public:
+ dline():pt()
+ {
+ x2=0;
+ y2=0;
+ }
+ voidsetline(intx, inty, intxx, intyy)
+ {
+pt::setco(x,y);
+ x2=xx;
+ y2=yy;
+ }
+ voiddrawl( intcolour)
+ {
+ floatx,y,dx,dy,length;
+ int i;
+ pt::setcolor(colour);
+ dx=abs(x2-xco);
+ dy=abs(y2-yco);
+ if(dx>=dy)
+ {
+ length=dx;
+ }
+ else
+ {
+ length=dy;
+ }
+ dx=(x2-xco)/length;
+ dy=(y2-yco)/length;
+ x=xco+0.5;
+ y=yco+0.5;
+ i=1;
+ while(i<=length)
+ {
+ pt::setco(x,y);
+ pt::draw();
+ x=x+dx;
+ y=y+dy;
+ i=i+1;
+ }
+ pt::setco(x,y);
+ pt::draw();
+ }
+ };
+ intmain()
+ {
+ intgd=DETECT,gm;
+ initgraph(&gd,&gm,NULL);
+ intx,y,r,x1,x2,y1,y2,xmax,ymax,xmid,ymid,n, i;
+ dcirclec;
+ cout<<"\nentercoordinatesofcentreofcircle:";
+cout<<"\nenterthevalueofx:";
+ cin>>x;
+ cout<<"\nenterthevalueofy:";
+ cin>>y;
+ cout<<"\nenterthevalueofradius:";
+ cin>>r;
+ xmax=getmaxx();
+ ymax=getmaxy();
+ xmid=xmax/2;
+ ymid=ymax/2;
+ setcolor(1);
+ c.setoff(xmid,ymid);
+ line(xmid,0,xmid,ymax);
+ line(0,ymid,xmax,ymid);
+ setcolor(15);
+ c.drawc(x,y,r);
+ ptp1;
+ p1.setco(100,100);
+ p1.setcolor(14);
+ dlinel;
+ l.setline(x1+xmid,ymid-y1,x2+xmid,ymid-y2);
+ cout<<"EnterTotalNumberof lines:";
+ cin>>n;
+ for(i=0;i<n;i++)
+ {
+ cout<<"Enterco-ordinatesofpointx1:";
+ cin>>x1;
+ cout<<"entercoordinatesofpointy1:";
+ cin>>y1;
+ cout<<"Enterco-ordinatesofpointx2:";
+ cin>>x2;
+ cout<<"entercoordinatesofpointy2:";
+ cin>>y2;
+ l.setline(x1+xmid,ymid-y1,x2+xmid,ymid-y2);
+ l.drawl(15);
+ }
+ cout<<"\nEntercoordinatesofcentreofcircle:";
+ cout<<"\nEnterthevalueofx:";
+ cin>>x;
+ cout<<"\nEnterthevalueofy:";
+ cin>>y;
+ cout<<"\nEnterthevalueofradius:";
+ cin>>r;
+setcolor(5);
+ c.drawc(x,y,r);
+ getch();
+ delay(200);
+ closegraph();
+ return 0;
+ }

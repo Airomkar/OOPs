@@ -1,0 +1,110 @@
+#include<iostream>
+#include<string.h>
+#include<istream>
+using namespace std;
+
+class publication{
+public:
+    string title;
+    float price;
+void add(){
+    cout<<"Enter title"<<endl;
+    cin.ignore();
+    getline (cin,title);
+    cout<<"Enter price "<<endl;
+    cin>>price;
+}
+void display()
+{
+    cout<<"Title is "<<title<<endl;
+    cout<<"Price is "<<price<<endl;
+}
+};
+
+class Book:public publication{
+public:
+    int pagecount;
+    static int bookno;
+    void add_book(){
+    add();
+    cout<<"Enter number of pages "<<endl;
+    cin>>pagecount;
+    bookno++;
+    }
+    void display_book(){
+    display();
+    cout<<"There are "<<pagecount<<" pages"<<endl;
+    }
+};
+int Book::bookno=0;
+
+class Tape:public publication{
+public:
+    int time;
+    static int tapeno;
+    void add_tape(){
+    add();
+    cout<<"Enter time of tape"<<endl;
+    cin>>time;
+    tapeno++;
+    }
+    void display_tape(){
+    display();
+    cout<<"time of tape is"<<time;
+    }
+};
+int Tape::tapeno=0;
+
+int main(){
+Book b[10];
+Tape t[10];
+int flag=1;
+while(flag==1){
+    int choice;
+    cout<<"***Menu***"<<endl;
+    cout<<"1.Enter book Record"<<endl;
+    cout<<"2.Enter tape Record"<<endl;
+    cout<<"3.Display book record"<<endl;
+    cout<<"4.Display tape record"<<endl;
+    cout<<"5.Exit"<<endl;
+    cin>>choice;
+switch(choice){
+    case 1:
+        int n;
+        cout<<"Enter number of books to be added"<<endl;
+        cin>>n;
+        while(n){
+        int i=Book::bookno;
+        b[i].add_book();
+        n--;
+        }
+        break;
+    case 2:
+        int n1;
+        cout<<"Enter number of tapes to be added"<<endl;
+        cin>>n1;
+        while(n1){
+        int i=Tape::tapeno;
+        t[i].add_tape();
+        n1--;
+        }
+        break;
+    case 3:
+        for(int j=0;j<Book::bookno;j++){
+        b[j].display_book();
+        cout<<endl<<endl;
+        }
+        break;
+    case 4:
+        for(int i=0;i<Tape::tapeno;i++){
+        t[i].display_tape();
+        cout<<endl<<endl;
+        }
+        break;
+    case 5:
+        flag=0;
+        break;
+    }
+    }
+    return 0;
+}

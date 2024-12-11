@@ -1,0 +1,131 @@
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <string>
+using namespace std;
+
+struct Item {
+    string name;
+    int quantity;
+    int cost;
+    int code;
+
+    bool operator==(const Item &other) const {
+        return code == other.code;
+    }
+
+    bool operator<(const Item &other) const {
+        return code < other.code;
+    }
+};
+
+vector<Item> items;
+
+void insertItem() {
+    Item item;
+    cout << "\nEnter Item Name: ";
+    cin >> item.name;
+    cout << "Enter Item Quantity: ";
+    cin >> item.quantity;
+    cout << "Enter Item Cost: ";
+    cin >> item.cost;
+    cout << "Enter Item Code: ";
+    cin >> item.code;
+    items.push_back(item);
+    cout << "Item added successfully.\n";
+}
+
+void displayItems() {
+    for (const auto &item : items) {
+        cout << "\nItem Name: " << item.name
+             << "\nItem Quantity: " << item.quantity
+             << "\nItem Cost: " << item.cost
+             << "\nItem Code: " << item.code << endl;
+    }
+}
+
+void searchItem() {
+    int code;
+    cout << "\nEnter Item Code to search: ";
+    cin >> code;
+
+    auto it = find_if(items.begin(), items.end(), [code](const Item &item) {
+        return item.code == code;
+    });
+
+    if (it != items.end()) {
+        cout << "\nItem Found:\n"
+             << "Item Name: " << it->name
+             << "\nItem Quantity: " << it->quantity
+             << "\nItem Cost: " << it->cost
+             << "\nItem Code: " << it->code << endl;
+    } else {
+        cout << "\nItem not found.\n";
+    }
+}
+
+void sortItemsByCost() {
+    sort(items.begin(), items.end(), [](const Item &a, const Item &b) {
+        return a.cost < b.cost;
+    });
+    cout << "\nItems sorted by cost.\n";
+}
+
+void deleteItem() {
+    int code;
+    cout << "\nEnter Item Code to delete: ";
+    cin >> code;
+
+    auto it = find_if(items.begin(), items.end(), [code](const Item &item) {
+        return item.code == code;
+    });
+
+    if (it != items.end()) {
+        items.erase(it);
+        cout << "\nItem deleted successfully.\n";
+    } else {
+        cout << "\nItem not found.\n";
+    }
+}
+
+int main() {
+    int choice;
+
+    do {
+        cout << "\n*** Menu ***\n"
+             << "1. Insert Item\n"
+             << "2. Display Items\n"
+             << "3. Search Item\n"
+             << "4. Sort Items by Cost\n"
+             << "5. Delete Item\n"
+             << "6. Exit\n"
+             << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                insertItem();
+                break;
+            case 2:
+                displayItems();
+                break;
+            case 3:
+                searchItem();
+                break;
+            case 4:
+                sortItemsByCost();
+                displayItems();
+                break;
+            case 5:
+                deleteItem();
+                break;
+            case 6:
+                cout << "Exiting program.\n";
+                break;
+            default:
+                cout << "Invalid choice. Please try again.\n";
+        }
+    } while (choice != 6);
+
+    return 0;
+}
